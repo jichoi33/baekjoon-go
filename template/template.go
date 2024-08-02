@@ -7,17 +7,17 @@ import (
 )
 
 var (
-	sc = bufio.NewScanner(os.Stdin)
-	wr = bufio.NewWriter(os.Stdout)
+	scanner = bufio.NewScanner(os.Stdin)
+	writer  = bufio.NewWriter(os.Stdout)
 )
 
 func nextInt() int {
-	sc.Scan()
-	v, _ := strconv.Atoi(sc.Text())
-	return v
+	scanner.Scan()
+	num, _ := strconv.Atoi(scanner.Text())
+	return num
 }
 
 func main() {
-	sc.Split(bufio.ScanWords)
-	defer wr.Flush()
+	scanner.Split(bufio.ScanWords)
+	defer writer.Flush()
 }
