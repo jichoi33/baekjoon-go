@@ -11,7 +11,7 @@ var (
 	writer  = bufio.NewWriter(os.Stdout)
 )
 
-func scanInt() int {
+func nextInt() int {
 	scanner.Scan()
 	num, _ := strconv.Atoi(scanner.Text())
 	return num
@@ -20,4 +20,11 @@ func scanInt() int {
 func main() {
 	scanner.Split(bufio.ScanWords)
 	defer writer.Flush()
+
+	n := nextInt()
+
+	for i := 1; i <= n; i++ {
+		writer.WriteString(strconv.Itoa(i))
+		writer.WriteByte('\n')
+	}
 }
