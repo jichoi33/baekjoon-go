@@ -54,6 +54,7 @@ func (p *PriorityQueue) Pop() any {
 
 func main() {
 	defer writer.Flush()
+
 	n := scanInt()
 	pq := make(PriorityQueue, 0, n)
 
