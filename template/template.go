@@ -7,9 +7,14 @@ import (
 )
 
 var (
-	scanner = bufio.NewScanner(os.Stdin)
-	writer  = bufio.NewWriter(os.Stdout)
+	scanner *bufio.Scanner
+	writer  *bufio.Writer
 )
+
+func init() {
+	scanner = bufio.NewScanner(os.Stdin)
+	writer = bufio.NewWriter(os.Stdout)
+}
 
 func scanInt() int {
 	scanner.Scan()

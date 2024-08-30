@@ -2,95 +2,66 @@ package main
 
 import (
 	"bufio"
+	"container/heap"
 	"os"
 	"strconv"
 )
 
-type MaxHeap struct {
-	elements []int
-	size     int
-}
-
 var (
-	sc = bufio.NewScanner(os.Stdin)
-	wr = bufio.NewWriter(os.Stdout)
+	scanner *bufio.Scanner
+	writer  *bufio.Writer
 )
 
-func (h *MaxHeap) push(e int) {
-	h.elements = append(h.elements, e)
-	h.size++
-	h.bubbleUp(h.size - 1)
+func init() {
+	scanner = bufio.NewScanner(os.Stdin)
+	writer = bufio.NewWriter(os.Stdout)
 }
 
-func (h *MaxHeap) pop() int {
-	root := h.elements[0]
-	h.elements[0] = h.elements[h.size-1]
-	h.elements = h.elements[:h.size-1]
-	h.size--
-
-	if h.size > 1 {
-		h.bubbleDown(0)
-	}
-
-	return root
+func scanInt() int {
+	scanner.Scan()
+	n, _ := strconv.Atoi(scanner.Text())
+	return n
 }
 
-func (h *MaxHeap) bubbleUp(i int) {
-	if i > 0 && h.elements[i] > h.elements[(i-1)/2] {
-		h.swap(i, (i-1)/2)
-		h.bubbleUp((i - 1) / 2)
-	}
+type PriorityQueue []int
+
+func (p *PriorityQueue) Len() int { return len(*p) }
+func (p *PriorityQueue) Less(i int, j int) bool {
+	return (*p)[i] > (*p)[j]
 }
 
-func (h *MaxHeap) bubbleDown(i int) {
-	maxIndex := i
-	leftIndex := i*2 + 1
-	rightIndex := i*2 + 2
+func (p *PriorityQueue) Swap(i int, j int) { (*p)[i], (*p)[j] = (*p)[j], (*p)[i] }
 
-	if leftIndex < h.size && h.elements[leftIndex] > h.elements[maxIndex] {
-		maxIndex = leftIndex
-	}
-	if rightIndex < h.size && h.elements[rightIndex] > h.elements[maxIndex] {
-		maxIndex = rightIndex
-	}
-
-	if i != maxIndex {
-		h.swap(i, maxIndex)
-		h.bubbleDown(maxIndex)
-	}
+func (p *PriorityQueue) Push(x any) {
+	*p = append(*p, x.(int))
 }
 
-func (h *MaxHeap) swap(i, j int) {
-	h.elements[i], h.elements[j] = h.elements[j], h.elements[i]
-}
-
-func nextInt() int {
-	sc.Scan()
-	v, _ := strconv.Atoi(sc.Text())
-	return v
+func (p *PriorityQueue) Pop() any {
+	x := (*p)[len(*p)-1]
+	*p = (*p)[:len(*p)-1]
+	return x
 }
 
 func main() {
-	sc.Split(bufio.ScanWords)
-	defer wr.Flush()
+	defer writer.Flush()
 
-	h := &MaxHeap{
-		elements: make([]int, 0, 100_000),
-		size:     0,
-	}
-
-	n := nextInt()
+	n := scanInt()
+	pq := make(PriorityQueue, 0, n)
 
 	for i := 0; i < n; i++ {
-		x := nextInt()
+		x := scanInt()
 		if x == 0 {
-			if h.size == 0 {
-				wr.WriteString("0\n")
+			if len(pq) == 0 {
+				writer.WriteString("0\n")
 				continue
 			}
-			wr.WriteString(strconv.Itoa(h.pop()) + "\n")
-		} else {
-			h.push(x)
+
+			v := heap.Pop(&pq).(int)
+			writer.WriteString(strconv.Itoa(v))
+			writer.WriteByte('\n')
+			continue
 		}
+
+		heap.Push(&pq, x)
 	}
 }

@@ -22,12 +22,22 @@ func scanInt() int {
 	n, _ := strconv.Atoi(scanner.Text())
 	return n
 }
+func abs(n int) int {
+	if n < 0 {
+		return -n
+	}
+	return n
+}
 
 type PriorityQueue []int
 
 func (p *PriorityQueue) Len() int { return len(*p) }
 func (p *PriorityQueue) Less(i int, j int) bool {
-	return (*p)[i] < (*p)[j]
+	diff := abs((*p)[i]) - abs((*p)[j])
+	if diff == 0 {
+		return (*p)[i] < (*p)[j]
+	}
+	return diff < 0
 }
 
 func (p *PriorityQueue) Swap(i int, j int) { (*p)[i], (*p)[j] = (*p)[j], (*p)[i] }
@@ -44,7 +54,6 @@ func (p *PriorityQueue) Pop() any {
 
 func main() {
 	defer writer.Flush()
-
 	n := scanInt()
 	pq := make(PriorityQueue, 0, n)
 
