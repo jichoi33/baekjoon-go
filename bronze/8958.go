@@ -6,9 +6,6 @@ import (
 	"strconv"
 )
 
-// ===========================
-// I/O Setup
-// ===========================
 var (
 	scanner *bufio.Scanner
 	writer  *bufio.Writer
@@ -31,10 +28,26 @@ func scanString() string {
 	return scanner.Text()
 }
 
-// ==============================
-// Problem Solving Logic
-// ==============================
-
 func main() {
 	defer writer.Flush()
+
+	T := scanInt()
+	for t := 0; t < T; t++ {
+		s := scanString()
+
+		countO := 0
+		totalScore := 0
+
+		for _, r := range s {
+			if r == 'O' {
+				countO++
+				totalScore += countO
+			} else {
+				countO = 0
+			}
+		}
+
+		writer.WriteString(strconv.Itoa(totalScore))
+		writer.WriteByte('\n')
+	}
 }
