@@ -10,14 +10,12 @@ import (
 // I/O Setup
 // ===========================
 var (
-	scanner *bufio.Scanner
-	writer  *bufio.Writer
+	scanner = bufio.NewScanner(os.Stdin)
+	writer  = bufio.NewWriter(os.Stdout)
 )
 
 func init() {
-	scanner = bufio.NewScanner(os.Stdin)
 	scanner.Split(bufio.ScanWords)
-	writer = bufio.NewWriter(os.Stdout)
 }
 
 func scanInt() int {
