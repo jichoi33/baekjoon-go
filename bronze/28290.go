@@ -16,19 +16,11 @@ var (
 
 func init() {
 	scanner.Split(bufio.ScanWords)
-	// const MaxBuf int = 1_000_001
-	// scanner.Buffer(make([]byte, 0, MaxBuf), MaxBuf)
 }
 
 func scanInt() int {
 	scanner.Scan()
 	num, _ := strconv.Atoi(scanner.Text())
-	return num
-}
-
-func scanFloat64() float64 {
-	scanner.Scan()
-	num, _ := strconv.ParseFloat(scanner.Text(), 64)
 	return num
 }
 
@@ -43,4 +35,24 @@ func scanString() string {
 
 func main() {
 	defer writer.Flush()
+
+	typeMap := make(map[string]string, 6)
+
+	typeMap["fdsajkl;"] = "in-out"
+	typeMap["jkl;fdsa"] = "in-out"
+	typeMap["asdf;lkj"] = "out-in"
+	typeMap[";lkjasdf"] = "out-in"
+	typeMap["asdfjkl;"] = "stairs"
+	typeMap[";lkjfdsa"] = "reverse"
+
+	input := scanString()
+
+	output, ok := typeMap[input]
+
+	if ok {
+		writer.WriteString(output)
+	} else {
+		writer.WriteString("molu")
+	}
+	writer.WriteByte('\n')
 }

@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"os"
 	"strconv"
+	"strings"
 )
 
 // ===========================
@@ -16,19 +17,11 @@ var (
 
 func init() {
 	scanner.Split(bufio.ScanWords)
-	// const MaxBuf int = 1_000_001
-	// scanner.Buffer(make([]byte, 0, MaxBuf), MaxBuf)
 }
 
 func scanInt() int {
 	scanner.Scan()
 	num, _ := strconv.Atoi(scanner.Text())
-	return num
-}
-
-func scanFloat64() float64 {
-	scanner.Scan()
-	num, _ := strconv.ParseFloat(scanner.Text(), 64)
 	return num
 }
 
@@ -43,4 +36,16 @@ func scanString() string {
 
 func main() {
 	defer writer.Flush()
+
+	N := scanInt()
+
+	writer.WriteString(strings.Repeat("@", N+2))
+	writer.WriteByte('\n')
+	for i := 0; i < N; i++ {
+		writer.WriteString("@")
+		writer.WriteString(strings.Repeat(" ", N))
+		writer.WriteString("@\n")
+	}
+	writer.WriteString(strings.Repeat("@", N+2))
+	writer.WriteByte('\n')
 }

@@ -16,8 +16,6 @@ var (
 
 func init() {
 	scanner.Split(bufio.ScanWords)
-	// const MaxBuf int = 1_000_001
-	// scanner.Buffer(make([]byte, 0, MaxBuf), MaxBuf)
 }
 
 func scanInt() int {
@@ -43,4 +41,23 @@ func scanString() string {
 
 func main() {
 	defer writer.Flush()
+
+	t, p := scanFloat64(), scanFloat64()
+	var batteryUsagePerMinute float64
+
+	if p < 20 {
+		batteryUsagePerMinute = (80 + (20-p)*2) / t
+	} else {
+		batteryUsagePerMinute = (100 - p) / t
+	}
+
+	var ans float64
+	if p > 20 {
+		ans = (p - 20) / batteryUsagePerMinute
+		p = 20
+	}
+	ans += p * 2 / batteryUsagePerMinute
+
+	writer.WriteString(strconv.FormatFloat(ans, 'f', -1, 64))
+	writer.WriteByte('\n')
 }
