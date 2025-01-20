@@ -26,28 +26,31 @@ func scanInt() int {
 	return num
 }
 
-// func scanFloat64() float64 {
-// 	scanner.Scan()
-// 	num, _ := strconv.ParseFloat(scanner.Text(), 64)
-// 	return num
-// }
-
-// func scanString() string {
-// 	scanner.Scan()
-// 	return scanner.Text()
-// }
-
-// func scanBytes() []byte {
-// 	scanner.Scan()
-// 	bytes := make([]byte, len(scanner.Bytes()))
-// 	copy(bytes, scanner.Bytes())
-// 	return bytes
-// }
-
 // ==============================
 // Problem Solving Logic
 // ==============================
 
 func main() {
 	defer writer.Flush()
+
+	for {
+		year := scanInt()
+		if year == 0 {
+			return
+		}
+
+		writer.WriteString(strconv.Itoa(year))
+		writer.WriteByte(' ')
+		if year%4 == 0 && year >= 1896 {
+			if year > 2020 {
+				writer.WriteString("No city yet chosen\n")
+			} else if (year >= 1914 && year <= 1918) || (year >= 1939 && year <= 1945) {
+				writer.WriteString("Games cancelled\n")
+			} else {
+				writer.WriteString("Summer Olympics\n")
+			}
+		} else {
+			writer.WriteString("No summer games\n")
+		}
+	}
 }

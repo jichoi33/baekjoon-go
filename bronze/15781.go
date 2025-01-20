@@ -16,8 +16,6 @@ var (
 
 func init() {
 	scanner.Split(bufio.ScanWords)
-	// const MaxBuf int = 1_000_001
-	// scanner.Buffer(make([]byte, 0, MaxBuf), MaxBuf)
 }
 
 func scanInt() int {
@@ -26,28 +24,27 @@ func scanInt() int {
 	return num
 }
 
-// func scanFloat64() float64 {
-// 	scanner.Scan()
-// 	num, _ := strconv.ParseFloat(scanner.Text(), 64)
-// 	return num
-// }
-
-// func scanString() string {
-// 	scanner.Scan()
-// 	return scanner.Text()
-// }
-
-// func scanBytes() []byte {
-// 	scanner.Scan()
-// 	bytes := make([]byte, len(scanner.Bytes()))
-// 	copy(bytes, scanner.Bytes())
-// 	return bytes
-// }
-
 // ==============================
 // Problem Solving Logic
 // ==============================
 
 func main() {
 	defer writer.Flush()
+
+	N, M := scanInt(), scanInt()
+
+	highestHelmetDefense := 0
+	highestVestDefense := 0
+
+	for i := 0; i < N; i++ {
+		highestHelmetDefense = max(highestHelmetDefense, scanInt())
+	}
+	for i := 0; i < M; i++ {
+		highestVestDefense = max(highestVestDefense, scanInt())
+	}
+
+	totalMaxDefense := highestHelmetDefense + highestVestDefense
+
+	writer.WriteString(strconv.Itoa(totalMaxDefense))
+	writer.WriteByte('\n')
 }

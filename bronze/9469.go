@@ -16,8 +16,6 @@ var (
 
 func init() {
 	scanner.Split(bufio.ScanWords)
-	// const MaxBuf int = 1_000_001
-	// scanner.Buffer(make([]byte, 0, MaxBuf), MaxBuf)
 }
 
 func scanInt() int {
@@ -26,23 +24,11 @@ func scanInt() int {
 	return num
 }
 
-// func scanFloat64() float64 {
-// 	scanner.Scan()
-// 	num, _ := strconv.ParseFloat(scanner.Text(), 64)
-// 	return num
-// }
-
-// func scanString() string {
-// 	scanner.Scan()
-// 	return scanner.Text()
-// }
-
-// func scanBytes() []byte {
-// 	scanner.Scan()
-// 	bytes := make([]byte, len(scanner.Bytes()))
-// 	copy(bytes, scanner.Bytes())
-// 	return bytes
-// }
+func scanFloat64() float64 {
+	scanner.Scan()
+	num, _ := strconv.ParseFloat(scanner.Text(), 64)
+	return num
+}
 
 // ==============================
 // Problem Solving Logic
@@ -50,4 +36,13 @@ func scanInt() int {
 
 func main() {
 	defer writer.Flush()
+
+	P := scanInt()
+	for p := 0; p < P; p++ {
+		N, D, A, B, F := scanInt(), scanFloat64(), scanFloat64(), scanFloat64(), scanFloat64()
+		writer.WriteString(strconv.Itoa(N))
+		writer.WriteByte(' ')
+		writer.WriteString(strconv.FormatFloat(D/(A+B)*F, 'f', -1, 64))
+		writer.WriteByte('\n')
+	}
 }
